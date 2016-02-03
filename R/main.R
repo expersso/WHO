@@ -106,3 +106,15 @@ get_dimensions <- function(result) {
   names(dims) <- vapply(dims, "[[", "label", FUN.VALUE = character(1L))
   dims[[1]]
 }
+
+# Convert lists of lists of meta data to lists of data frames of meta data
+convert_meta_to_df <- function(data_list) {
+
+  dfs <- lapply(data_list, function(meta) {
+    data.frame(Filter(function(y) length(y) > 0, meta),
+               stringsAsFactors = FALSE)
+  })
+
+  df <- dplyr::rbind_all(dfs)
+  df[, c("label", "display")]
+}

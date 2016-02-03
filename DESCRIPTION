@@ -1,13 +1,13 @@
 Package: WHO
 Type: Package
-Title: Programmatic Data Retrieval from the World Health Organization
+Title: R Client for the World Health Organization API
 Version: 0.1
-Date: 2016-02-02
+Date: 2016-02-03
 Authors@R: person("Eric", "Persson", email = "expersso5@gmail.com",
     role = c("aut", "cre"))
-Description: Retrieve Data From the World Health Organization API.
+Description: Provides programmatic access to the World Health Organization API.
 License: CC0
-URL: https://www.github.com/expersso/WHO
+URL: https://www.github.com/expersso/WHO , https://www.who.int
 BugReports: https://www.github.com/expersso/WHO/issues
 Imports: httr,
     dplyr
