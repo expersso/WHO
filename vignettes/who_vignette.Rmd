@@ -1,0 +1,86 @@
+---
+title: "Programmatic Data Retrieval from the WHO"
+author: "Eric Persson"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Programmatic Data Retrieval from the WHO}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# WHO package
+
+```{r options, echo=FALSE}
+knitr::opts_chunk$set(cache = FALSE, warning = FALSE, error = FALSE, 
+                      fig.path = "")
+library(WHO)
+```
+
+## Introduction
+
+The `WHO` package allows the user to download public health data from the 
+[World Health Organization's](http://www.WHO.int/) 
+[Global Health Observatory](http://www.WHO.int/gho/en/) 
+in a dynamic and reproducible way.
+
+The package can be installed from either CRAN or Github (development version):
+
+```{r install, eval=FALSE}
+# From CRAN
+install.packages("WHO")
+
+# From Github
+library(devtools)
+install_github("expersso/WHO")
+
+library(WHO)
+```
+
+## Usage Example
+
+The `get_codes` function returns a data frame with series codes and descriptions
+for all available series:
+
+```{r get_codes}
+library(dplyr)
+
+codes <- get_codes()
+head(codes)
+```
+
+(To retrieve additional meta information (e.g. French and Spanish descriptions,
+category breakdowns of series, etc), use `get_codes(extra = TRUE)`.)
+
+To find a series of interest, use either `View(codes)` in Rstudio, or search
+with regular expressions:
+
+```{r find_series}
+codes[grepl("[Ll]ife expectancy", codes$display), ]
+```
+
+Having found the series of interest (in the `label` column), we can easily
+retrieve the data and, for example, make a chart:
+
+```{r example_1}
+library(ggplot2)
+
+df <- get_data("WHOSIS_000001")
+
+head(df)
+
+df %>% 
+  filter(sex == "Both sexes") %>% 
+  group_by(region, year) %>%
+  summarise(value = mean(value)) %>% 
+  ggplot(aes(x = year, y = value, color = region, linetype = region)) +
+  geom_line(size = 1) +
+  theme_light(9) +
+  labs(x = NULL, y = "Life expectancy at birth (years)\n", 
+       linetype = NULL, color = NULL,
+       title = "Evolution of life expectancy (by region)\n")
+```
+
+## Disclaimer
+
+This package is in no way officially related to or endorsed by the WHO.

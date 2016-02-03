@@ -1,0 +1,94 @@
+---
+output:
+  md_document:
+    variant: markdown_github
+---
+
+# WHO
+
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/WHO)](http://cran.r-project.org/web/packages/WHO)
+[![Travis-CI Build Status](https://travis-ci.org/expersso/WHO.svg?branch=master)](https://travis-ci.org/expersso/WHO)
+[![codecov.io](https://codecov.io/github/expersso/WHO/coverage.svg?branch=master)](https://codecov.io/github/expersso/WHO?branch=master)
+[![Cranlogs Downloads](http://cranlogs.r-pkg.org/badges/grand-total/WHO)](http://cran.r-project.org/web/packages/WHO)
+
+```{r options, echo=FALSE}
+knitr::opts_chunk$set(cache = FALSE, warning = FALSE, error = FALSE, 
+                      fig.path = "")
+library(WHO)
+```
+
+### Introduction
+
+The `WHO` package allows the user to download public health data from the 
+[World Health Organization's](http://www.WHO.int/) 
+[Global Health Observatory](http://www.WHO.int/gho/en/) 
+in a dynamic and reproducible way.
+
+The package can be installed from either CRAN or Github (development version):
+
+```{r install, eval=FALSE}
+# From CRAN
+install.packages("WHO")
+
+# From Github
+library(devtools)
+install_github("expersso/WHO")
+
+library(WHO)
+```
+
+### Usage Example
+
+The `get_codes` function returns a data frame with series codes and descriptions
+for all available series:
+
+```{r get_codes}
+library(dplyr)
+
+codes <- get_codes()
+head(codes)
+```
+
+(To retrieve additional meta information (e.g. French and Spanish descriptions,
+category breakdowns of series, etc), use `get_codes(extra = TRUE)`.)
+
+To find a series of interest, use either `View(codes)` in Rstudio, or search
+with regular expressions:
+
+```{r find_series}
+codes[grepl("[Ll]ife expectancy", codes$display), ]
+```
+
+The `codes` data frame also provides a `url` to the meta data for a specified
+series:
+
+```{r, eval=FALSE}
+# Opens a browser with the meta data for the specified series
+browseURL(codes$url[1])
+```
+
+Having found the series of interest (in the `label` column), we can easily
+retrieve the data and, for example, make a chart:
+
+```{r example_1}
+library(ggplot2)
+
+df <- get_data("WHOSIS_000001")
+
+head(df)
+
+df %>% 
+  filter(sex == "Both sexes") %>% 
+  group_by(region, year) %>%
+  summarise(value = mean(value)) %>% 
+  ggplot(aes(x = year, y = value, color = region, linetype = region)) +
+  geom_line(size = 1) +
+  theme_light(9) +
+  labs(x = NULL, y = "Life expectancy at birth (years)\n", 
+       linetype = NULL, color = NULL,
+       title = "Evolution of life expectancy (by region)\n")
+```
+
+### Disclaimer
+
+This package is in no way officially related to or endorsed by the WHO.
