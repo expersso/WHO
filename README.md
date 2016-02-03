@@ -117,6 +117,7 @@ df %>%
 ```
 
 ![](example_1-1.png)
- \#\#\# Disclaimer
+
+### Disclaimer
 
 This package is in no way officially related to or endorsed by the WHO.

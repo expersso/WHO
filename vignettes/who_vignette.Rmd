@@ -13,7 +13,7 @@ vignette: >
 
 ```{r options, echo=FALSE}
 knitr::opts_chunk$set(cache = FALSE, warning = FALSE, error = FALSE, 
-                      fig.path = "")
+                      message = FALSE, fig.path = "")
 library(WHO)
 ```
 
@@ -46,7 +46,7 @@ for all available series:
 library(dplyr)
 
 codes <- get_codes()
-head(codes)
+glimpse(codes)
 ```
 
 (To retrieve additional meta information (e.g. French and Spanish descriptions,
@@ -62,7 +62,7 @@ codes[grepl("[Ll]ife expectancy", codes$display), ]
 Having found the series of interest (in the `label` column), we can easily
 retrieve the data and, for example, make a chart:
 
-```{r example_1}
+```{r example_1, fig.width=5, fig.height=3}
 library(ggplot2)
 
 df <- get_data("WHOSIS_000001")
@@ -80,6 +80,7 @@ df %>%
        linetype = NULL, color = NULL,
        title = "Evolution of life expectancy (by region)\n")
 ```
+
 
 ## Disclaimer
 

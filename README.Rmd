@@ -70,7 +70,7 @@ browseURL(codes$url[1])
 Having found the series of interest (in the `label` column), we can easily
 retrieve the data and, for example, make a chart:
 
-```{r example_1}
+```{r example_1, fig.width=5, fig.height=3}
 library(ggplot2)
 
 df <- get_data("WHOSIS_000001")
@@ -88,6 +88,7 @@ df %>%
        linetype = NULL, color = NULL,
        title = "Evolution of life expectancy (by region)\n")
 ```
+
 
 ### Disclaimer
 
