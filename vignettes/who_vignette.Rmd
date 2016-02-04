@@ -4,12 +4,10 @@ author: "Eric Persson"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Programmatic Data Retrieval from the WHO}
+  %\VignetteIndexEntry{WHO package}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
-
-# WHO package
 
 ```{r options, echo=FALSE}
 knitr::opts_chunk$set(cache = FALSE, warning = FALSE, error = FALSE, 
@@ -17,7 +15,7 @@ knitr::opts_chunk$set(cache = FALSE, warning = FALSE, error = FALSE,
 library(WHO)
 ```
 
-## Introduction
+### Introduction
 
 The `WHO` package allows the user to download public health data from the 
 [World Health Organization's](http://www.WHO.int/) 
@@ -37,7 +35,7 @@ install_github("expersso/WHO")
 library(WHO)
 ```
 
-## Usage Example
+### Usage Example
 
 The `get_codes` function returns a data frame with series codes and descriptions
 for all available series:
@@ -82,6 +80,6 @@ df %>%
 ```
 
 
-## Disclaimer
+### Disclaimer
 
 This package is in no way officially related to or endorsed by the WHO.
