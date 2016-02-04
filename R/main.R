@@ -76,16 +76,16 @@ get_codes <- function(extra = FALSE) {
       row_attr <- dplyr::rbind_all(row_attr)
 
       # Transpose the attributes DF to be able to cbind with data DF
-      tryCatch({
+      df_attr <- tryCatch({
         # Get attribute values
         df_attr <- as.data.frame(t(row_attr)[2, , drop = FALSE],
                                  stringsAsFactors = FALSE)
 
         # Get attribute names
         names(df_attr) <- t(row_attr)[1, ]
-
+        df_attr
         # Return empty DF if no attributes found
-      }, error = function(e) df_attr <- dplyr::data_frame(NA))
+      }, error = function(e) dplyr::data_frame(empty = NA))
 
       # Join data and attributes
       return(cbind(df_data, df_attr))
@@ -98,23 +98,5 @@ get_codes <- function(extra = FALSE) {
   names(df) <- tolower(names(df))
 
   # Drop degenerate columns with no name
-  df[, !grepl("x\\d", names(df))]
-}
-
-get_dimensions <- function(result) {
-  dims <- result$dimension
-  names(dims) <- vapply(dims, "[[", "label", FUN.VALUE = character(1L))
-  dims[[1]]
-}
-
-# Convert lists of lists of meta data to lists of data frames of meta data
-convert_meta_to_df <- function(data_list) {
-
-  dfs <- lapply(data_list, function(meta) {
-    data.frame(Filter(function(y) length(y) > 0, meta),
-               stringsAsFactors = FALSE)
-  })
-
-  df <- dplyr::rbind_all(dfs)
-  df[, c("label", "display")]
+  df[, !grepl("x\\d|empty", names(df))]
 }
