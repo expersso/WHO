@@ -1,8 +1,8 @@
 Package: WHO
 Type: Package
 Title: R Client for the World Health Organization API
-Version: 0.1
-Date: 2016-02-03
+Version: 0.1.1
+Date: 2016-02-08
 Authors@R: person("Eric", "Persson", email = "expersso5@gmail.com",
     role = c("aut", "cre"))
 Description: Provides programmatic access to the World Health Organization API.
@@ -10,7 +10,7 @@ License: CC0
 URL: https://www.github.com/expersso/WHO , http://www.who.int
 BugReports: https://www.github.com/expersso/WHO/issues
 Imports: httr,
-    dplyr
+    dplyr (>= 0.4.3)
 VignetteBuilder: knitr
 Suggests: ggplot2,
     knitr,
