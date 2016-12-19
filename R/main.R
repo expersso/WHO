@@ -24,7 +24,7 @@ parse_data <- function(result) {
     data.frame(row$dim, value = row$Value, stringsAsFactors = FALSE)
   })
 
-  df <- dplyr::rbind_all(df)
+  df <- dplyr::bind_rows(df)
   df <- dplyr::as_data_frame(lapply(df, try_as_numeric))
   names(df) <- tolower(names(df))
   df
@@ -73,7 +73,7 @@ get_codes <- function(extra = FALSE) {
     if(extra) {
       # Bind together all attributes for a series into a DF
       row_attr <- lapply(row$attr, function(x) dplyr::as_data_frame(x))
-      row_attr <- dplyr::rbind_all(row_attr)
+      row_attr <- dplyr::bind_rows(row_attr)
 
       # Transpose the attributes DF to be able to cbind with data DF
       df_attr <- tryCatch({
@@ -93,7 +93,7 @@ get_codes <- function(extra = FALSE) {
     df_data
   })
 
-  df <- dplyr::rbind_all(df_list)
+  df <- dplyr::bind_rows(df_list)
 
   names(df) <- tolower(names(df))
 
