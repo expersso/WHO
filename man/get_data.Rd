@@ -21,4 +21,3 @@ Retrieve Data from the World Health Organization
 df <- get_data("WHOSIS_000001")
 head(df)
 }
-
