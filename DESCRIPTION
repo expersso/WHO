@@ -16,4 +16,4 @@ Suggests: ggplot2,
     knitr,
     testthat,
     rmarkdown
-RoxygenNote: 5.0.1
+RoxygenNote: 6.1.1
