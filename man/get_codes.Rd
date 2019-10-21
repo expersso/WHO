@@ -21,4 +21,3 @@ Get all codes and metadata for WHO series
 codes <- get_codes()
 str(codes)
 }
-

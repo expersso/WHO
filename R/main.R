@@ -87,8 +87,11 @@ get_codes <- function(extra = FALSE) {
         # Return empty DF if no attributes found
       }, error = function(e) dplyr::data_frame(empty = NA))
 
+      df <- cbind(df_data, df_attr)
+      class(df) <- c("tbl_df", "tbl", "data.frame")
+
       # Join data and attributes
-      return(cbind(df_data, df_attr))
+      return(df)
     }
     df_data
   })
